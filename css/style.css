@@ -55,7 +55,7 @@
   }
 
   section{
-    height: 100vh;
+    height: 120vh;
     width: 100%;
     display: block;
     place-content: center;
@@ -73,7 +73,7 @@
 
 
   .slider{
-    height: 60%;
+    height: 50%;
     aspect-ratio: 3/5;
     border-radius: 2em;
     position: absolute;
@@ -81,6 +81,7 @@
     overflow: hidden;
     object-fit: cover;
     object-position: center;
+    transform: translateY(20%);
   }
   .left{
     left: 40%;
@@ -91,3 +92,9 @@
     transform-origin: left bottom;
   }
 
+  .section2first{
+
+  }
+  .section2second{
+    opacity: 0;
+  }
