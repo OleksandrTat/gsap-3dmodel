@@ -15,9 +15,9 @@ animationBlock.appendChild(renderer.domElement);
 scene.add(new THREE.AmbientLight(0xffffff, 1));
 
 let model; // Змінна для моделі літака
-const startX = -1000; // Початкова позиція по X
+const startX = -1500; // Початкова позиція по X
 const endX = 600; // Кінцева позиція по X
-const flightHeight = 300; // Висота польоту
+const flightHeight = 400; // Висота польоту
 
 // Завантажуємо 3D-модель літака
 const loader = new THREE.GLTFLoader();
@@ -56,7 +56,7 @@ function updateAnimation() {
   const rect = animationBlock.getBoundingClientRect(); // Отримуємо розміри блоку
   
   // Обчислюємо прогрес анімації (від 0 до 1)
-  const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / window.innerHeight));
+  const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / window.innerHeight / 2));
   
   // Оновлюємо позицію літака по X та нахил по Z
   model.position.x = startX + (endX - startX) * progress;

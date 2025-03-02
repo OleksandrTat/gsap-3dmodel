@@ -97,3 +97,19 @@ gsap.to(".right2-2", {
         markers: false,
     }
 })
+
+
+// AN-225
+
+gsap.to(".text3", {
+    opacity: 1,
+    filter: "blur(0px)",
+    ease: "power4.inOut",
+    scrollTrigger: {
+        trigger: ".section3",
+        start: "0% center",
+        end: "30% center",
+        scrub: true,
+        markers: false,
+    }
+})
