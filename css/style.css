@@ -10,8 +10,10 @@
     font-style: normal;
   }
 
-  
-
+  :root {
+    --start-color: rgb(1, 87, 183);
+    --end-color: rgb(255, 215, 1);
+  }
 
 
   body {
@@ -19,6 +21,39 @@
     width: 100%;
     background: #161616;
     color: white;
+  }
+
+  
+  figure {
+    border-radius: 50%;
+    width: 15%;
+    aspect-ratio: 1;
+    position: absolute;
+  }
+
+  /* Використання CSS‑змінних для кольорів градієнта */
+  .color {
+    --start-color: #0057b7;
+    --end-color: #ffd700;
+    background: linear-gradient(135deg, var(--start-color), var(--end-color));
+    transition: background 0.3s ease;
+  }
+  .figure1 {
+    width: 15%;
+    left: -7%;
+    top: -5%;
+  }
+  .figure2 {
+    width: 22%;
+    transform: rotate(90deg);
+    right: 0%;
+    top: 17%;
+  }
+  .figure3 {
+    width: 8%;
+    transform: rotate(30deg);
+    left: 20%;
+    bottom: 5%;
   }
 
   span {
@@ -35,6 +70,7 @@
     width: 100% !important;
     top: 10%;
     /* border: 2px solid #ff0000; */
+    z-index: 10;
   }
 
   .start{
@@ -67,7 +103,7 @@
   }
 
   .section1{
-    opacity: 0;
+    /* opacity: 0; */
   }
   .slider{
     height: 50%;
@@ -99,8 +135,8 @@
   
 
   .section4{
-    opacity: 0;
-    filter: blur(10px);
+    /* opacity: 0; */
+    /* filter: blur(10px); */
   }
   .text4{
     transform: translateX(-20vw);
