@@ -1,4 +1,56 @@
-// ************** Перша сцена: Анімований літак (GLTF) ************** //
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AN-225 Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/OBJLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/MTLLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background: black;
+        }
+        /* Стилі для першого анімованого блоку */
+        .section3 {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+        /* Контейнер для першої моделі */
+        #animation-block {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        /* Контейнер для другої моделі */
+        #viewer-container {
+            width: 100%;
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- AN-225 (анімація під час скролу) -->
+<section class="section3">
+    <div class="text3">
+        <h3 class="istok-web-bold">AN-225 “МРІЯ”</h3>
+        <h5 class="istok-web-bold">The largest airplane in the world!<span>✈️🇺🇦</span></h5>
+    </div>
+    <div id="animation-block"></div>
+</section>
+
+<!-- AN-225 (відображення obj+mtl) -->
+<section id="viewer-container"></section>
+
+<script>
+    // ************** Перша сцена: Анімований літак (GLTF) ************** //
     // Створюємо сцену, камеру та рендерер
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -93,12 +145,6 @@
     window.addEventListener('resize', onResize);
 
 
-
-
-
-
-
-
     // ************** Друга сцена: Відображення OBJ+MTL ************** //
     const scene2 = new THREE.Scene();
     const camera2 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -108,8 +154,8 @@
     renderer2.setSize(viewerContainer.clientWidth, viewerContainer.clientHeight);
     viewerContainer.appendChild(renderer2.domElement);
 
-    scene2.add(new THREE.AmbientLight(0xffffff, 0.7));
-    const rotatingLight = new THREE.PointLight(0xffffff, 1.4);
+    scene2.add(new THREE.AmbientLight(0xffffff, 1));
+    const rotatingLight = new THREE.PointLight(0xffffff, 2);
     scene2.add(rotatingLight);
 
     const controls = new THREE.OrbitControls(camera2, renderer2.domElement);
@@ -151,7 +197,7 @@
         camera2.aspect = viewerContainer.clientWidth / viewerContainer.clientHeight;
         camera2.updateProjectionMatrix();
     });
+</script>
 
-
-
-    
+</body>
+</html>

@@ -1,10 +1,21 @@
 gsap.registerPlugin(ScrollTrigger)
 
 // section 1
+gsap.to(".section1", {
+    opacity: 1,
+    ease: "power2.inOut",
+    scrollTrigger: {
+        trigger: ".section1",
+        start: "20% center",
+        end: "55% center",
+        scrub: true,
+        markers: false,
+    }
+})
 gsap.to(".leftfirst", {
     x: "-90%",
     rotate: "-15deg",
-    ease: "power4.inOut",
+    ease: "power2.inOut",
     scrollTrigger: {
         trigger: ".section1",
         start: "20% center",
@@ -16,7 +27,7 @@ gsap.to(".leftfirst", {
 gsap.to(".rightfirst", {
     x: "90%",
     rotate: "15deg",
-    ease: "power4.inOut",
+    ease: "power2.inOut",
     scrollTrigger: {
         trigger: ".section1",
         start: "20% center",
@@ -29,7 +40,7 @@ gsap.to(".rightfirst", {
 // section 2
 gsap.to(".section2first", {
     opacity: 0,
-    ease: "power4.inOut",
+    ease: "power2.inOut",
     scrollTrigger: {
         trigger: ".section2",
         start: "20% center",
@@ -41,7 +52,7 @@ gsap.to(".section2first", {
 gsap.to(".left2-1", {
     x: "-90%",
     rotate: "-15deg",
-    ease: "power4.inOut",
+    ease: "power2.inOut",
     scrollTrigger: {
         trigger: ".section2",
         start: "20% center",
@@ -53,7 +64,7 @@ gsap.to(".left2-1", {
 gsap.to(".right2-1", {
     x: "90%",
     rotate: "15deg",
-    ease: "power4.inOut",
+    ease: "power2.inOut",
     scrollTrigger: {
         trigger: ".section2",
         start: "20% center",
@@ -64,7 +75,7 @@ gsap.to(".right2-1", {
 })
 gsap.to(".section2second", {
     opacity: 1,
-    ease: "power4.inOut",
+    ease: "power2.inOut",
     scrollTrigger: {
         trigger: ".section2",
         start: "20% center",
@@ -76,7 +87,7 @@ gsap.to(".section2second", {
 gsap.to(".left2-2", {
     x: "-90%",
     rotate: "-15deg",
-    ease: "power4.inOut",
+    ease: "power2.inOut",
     scrollTrigger: {
         trigger: ".section2",
         start: "20% center",
@@ -88,7 +99,7 @@ gsap.to(".left2-2", {
 gsap.to(".right2-2", {
     x: "90%",
     rotate: "15deg",
-    ease: "power4.inOut",
+    ease: "power2.inOut",
     scrollTrigger: {
         trigger: ".section2",
         start: "20% center",
@@ -104,11 +115,27 @@ gsap.to(".right2-2", {
 gsap.to(".text3", {
     opacity: 1,
     filter: "blur(0px)",
-    ease: "power4.inOut",
+    ease: "power2.inOut",
     scrollTrigger: {
         trigger: ".section3",
         start: "0% center",
-        end: "30% center",
+        end: "center center",
+        scrub: true,
+        markers: false,
+    }
+})
+
+
+// AN-225 destroyed
+
+gsap.to(".section4", {
+    opacity: 1,
+    filter: "blur(0px)",
+    ease: "power2.inOut",
+    scrollTrigger: {
+        trigger: ".section4",
+        start: "0% center",
+        end: "center center",
         scrub: true,
         markers: false,
     }
