@@ -185,7 +185,8 @@
     position: sticky;
     top: 10%;
     transition: transform 0.3s ease;
-    border-radius: 15px;
+    border-radius: 30px;
+    overflow: hidden;
   }
   .videobg iframe{
     width: 100%;
