@@ -234,8 +234,8 @@
     position: relative;
   }
   .videobg {
-    width: 80%;
-    height: 70%;
+    width: 50%;
+    height: 50%;
     background-color: black;
     position: sticky;
     top: 10%;
