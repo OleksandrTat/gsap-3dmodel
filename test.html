@@ -2,113 +2,94 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GSAP ScrollTrigger Gradient Animation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GSAP Parallax Demo</title>
   <style>
+    /* Темна тема */
     body {
-      width: 100%;
-      padding: 0;
       margin: 0;
-      background: #161616;
+      padding: 0;
+      background: #121212;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
     }
-    .block {
-      width: 100%;
-      height: 100vh;
+    section {
       position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 1px solid #333;
     }
-    figure {
-      border-radius: 50%;
-      width: 15%;
-      aspect-ratio: 1;
+    .content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 20px;
+    }
+    /* Паралакс-шари */
+    .parallax {
       position: absolute;
-    }
-    /* Використання CSS‑змінних для кольорів градієнта */
-    .color {
-      --start-color: #0057b7;
-      --end-color: #ffd700;
-      background: linear-gradient(135deg, var(--start-color), var(--end-color));
-      transition: background 0.3s ease;
-    }
-    .figure1 {
-      width: 15%;
-      left: -7%;
-      top: -5%;
-    }
-    .figure2 {
-      width: 22%;
-      transform: rotate(90deg);
-      right: 0%;
-      top: 17%;
-    }
-    .figure3 {
-      width: 8%;
-      transform: rotate(30deg);
-      left: 20%;
-      bottom: 5%;
+      font-size: 2rem;
+      padding: 15px 25px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #ffffff55;
+      border-radius: 8px;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
-  <div class="block">
-    <figure class="color figure1"></figure>
-    <figure class="color figure2"></figure>
-    <figure class="color figure3"></figure>
-  </div>
-  
-  <div class="block blockred">
-    <figure class="color figure1"></figure>
-    <figure class="color figure2"></figure>
-    <figure class="color figure3"></figure>
-  </div>
 
-  <div class="block">
-    <figure class="color figure1"></figure>
-    <figure class="color figure2"></figure>
-    <figure class="color figure3"></figure>
-  </div>
-  
-  <div class="block blockred">
-    <figure class="color figure1"></figure>
-    <figure class="color figure2"></figure>
-    <figure class="color figure3"></figure>
-  </div>
-  
-  <!-- Підключення GSAP та ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <section>
+    <div class="content">
+      <h1>GSAP Parallax Demo</h1>
+      <p>Прокрутіть, щоб побачити ефект</p>
+    </div>
+    <div class="parallax" data-speed="2" style="top: 10%; left: 10%;">Шар 1 (speed 2)</div>
+    <div class="parallax" data-speed="4" style="top: 50%; right: 10%;">Шар 2 (speed 4)</div>
+  </section>
+
+  <section>
+    <div class="content">
+      <h2>Секція 2</h2>
+      <p>Паралакс-ефект з іншими шарами</p>
+    </div>
+    <div class="parallax" data-speed="3" style="bottom: 20%; left: 15%;">Шар 3 (speed 3)</div>
+    <div class="parallax" data-speed="5" style="top: 30%; right: 20%;">Шар 4 (speed 5)</div>
+  </section>
+
+  <section>
+    <div class="content">
+      <h2>Секція 3</h2>
+      <p>Продовжуйте прокручувати...</p>
+    </div>
+    <div class="parallax" data-speed="2" style="top: 20%; left: 20%;">Шар 5 (speed 2)</div>
+    <div class="parallax" data-speed="4" style="bottom: 30%; right: 15%;">Шар 6 (speed 4)</div>
+  </section>
+
+  <!-- Підключення GSAP та ScrollTrigger з CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
-    // Функції для анімації всіх фігур
-    function animateToRed() {
-      gsap.to(document.querySelectorAll("figure.color"), {
-        duration: 1,
-        "--start-color": "#FD0000",
-        "--end-color": "#000000",
-        ease: "power2.inOut"
-      });
-    }
-
-    function animateToDefault() {
-      gsap.to(document.querySelectorAll("figure.color"), {
-        duration: 1,
-        "--start-color": "#0057b7",
-        "--end-color": "#ffd700",
-        ease: "power2.inOut"
-      });
-    }
-
-    // Для кожного елемента з класом blockred створюємо ScrollTrigger,
-    // який буде змінювати колір ВСІХ фігур при вході/виході з центру viewport.
-    gsap.utils.toArray(".blockred").forEach(block => {
-      ScrollTrigger.create({
-        trigger: block,
-        start: "top center",
-        end: "bottom center",
-        onEnter: animateToRed,
-        onLeave: animateToDefault,
-        onEnterBack: animateToRed,
-        onLeaveBack: animateToDefault
+    // Для кожного елемента з атрибутом data-speed створюємо анімацію паралаксу
+    gsap.utils.toArray('[data-speed]').forEach(layer => {
+      const speed = parseFloat(layer.getAttribute('data-speed'));
+      
+      gsap.to(layer, {
+        // Розраховуємо зміну положення по осі Y залежно від висоти документу та швидкості
+        y: -(document.documentElement.scrollHeight - window.innerHeight) / speed,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: layer,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
       });
     });
   </script>

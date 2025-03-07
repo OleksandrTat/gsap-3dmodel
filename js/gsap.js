@@ -160,7 +160,7 @@
   // animation-right
   gsap.to(".animation-right", {
     width: "100%",
-    ease: "power2.inOut",
+    ease: "power4.inOut",
     scrollTrigger: {
         trigger: ".section6",
         start: "0% center",
@@ -171,7 +171,7 @@
   })
 
   // vishivanka
-  gsap.to(".content", {
+  gsap.to(".ivvish", {
     opacity: 1,
     ease: "power2.inOut",
     scrollTrigger: {
@@ -181,7 +181,19 @@
         scrub: true,
         markers: false,
     }
-  })
+  });
+  gsap.from(".vyshyvankabg", {
+    y: "20%",
+    ease: "power2.inOut",
+    scrollTrigger: {
+        trigger: ".section7",
+        start: "0% center",
+        end: "center center",
+        scrub: true,
+        markers: false,
+    }
+  });
+
 
 
 
@@ -203,29 +215,36 @@ let activeYellowCount = 0;
 
 // Функція для анімації кольорів фігур
 function updateColorAnimation() {
+  let startColor, endColor;
+  
   if (activeRedCount > 0) {
-    gsap.to(document.querySelectorAll("figure.color"), {
-      duration: 1,
-      "--start-color": "#FD0000",
-      "--end-color": "#000000",
-      ease: "power2.inOut"
-    });
+    startColor = "#FD0000";
+    endColor = "#000000";
   } else if (activeYellowCount > 0) {
-    gsap.to(document.querySelectorAll("figure.color"), {
-      duration: 1,
-      "--start-color": "#DFA678",
-      "--end-color": "#ffffff",
-      ease: "power2.inOut"
-    });
+    startColor = "#D36216";
+    endColor = "#ffffff";
   } else {
-    gsap.to(document.querySelectorAll("figure.color"), {
-      duration: 1,
-      "--start-color": "#0057b7",
-      "--end-color": "#FFD700",
-      ease: "power2.inOut"
-    });
+    startColor = "#0057b7";
+    endColor = "#FFD700";
   }
+  
+  // Анімація для фігур
+  gsap.to(document.querySelectorAll("figure.color"), {
+    duration: 1,
+    "--start-color": startColor,
+    "--end-color": endColor,
+    ease: "power2.inOut"
+  });
+  
+  // Анімація для кореневого елемента (скролу)
+  gsap.to(document.documentElement, {
+    duration: 1,
+    "--start-color": startColor,
+    "--end-color": endColor,
+    ease: "power2.inOut"
+  });
 }
+
 
 // Додаємо ScrollTrigger для секцій sectionRed
 gsap.utils.toArray(".sectionRed").forEach(section => {
