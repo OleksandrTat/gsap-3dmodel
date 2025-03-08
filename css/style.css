@@ -113,8 +113,6 @@
 
   /* Використання CSS‑змінних для кольорів градієнта */
   .color {
-    --start-color: #0057b7;
-    --end-color: #ffd700;
     background: linear-gradient(135deg, var(--start-color), var(--end-color));
     transition: background 0.3s ease;
   }
@@ -350,4 +348,53 @@
   }
   .ivvish{
     opacity: 0;
+  }
+
+
+
+  .cuisinebg{
+    width: 40%;
+    height: 35%;
+    margin-left: 2%;
+    border-radius: 3em;
+    background-color: rgba(255, 255, 255, 0.123);
+    backdrop-filter: blur(10px);
+    padding: 2em;
+    transition: transform 0.5s ease;
+  }
+  .section8 h4 {
+    font-size: 4em;
+    position: relative;
+    top: -0.5em;
+    text-align: center;
+  }
+  .section8 p{
+    font-size: 1.8em;
+    position: relative;
+    display: inline-block;
+    top: -4em;
+    text-align: center;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+  }
+  .section8 figure img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .foodfigure1 {
+    width: 17%;
+    left: 1%;
+    bottom: 7%;
+  }
+  .foodfigure2 {
+    width: 35%;
+    right: 0%;
+    bottom: -17%;
+  }
+  .foodfigure3 {
+    width: 9%;
+    left: 30%;
+    bottom: -1%;
   }

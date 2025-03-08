@@ -147,7 +147,7 @@
     width: "100%",
     height: "100%",
     borderRadius: "0px",
-    ease: "power2.inOut",
+    ease: "power1.inOut",
     scrollTrigger: {
         trigger: ".section5",
         start: "top center",
@@ -160,7 +160,7 @@
   // animation-right
   gsap.to(".animation-right", {
     width: "100%",
-    ease: "power4.inOut",
+    ease: "power2.inOut",
     scrollTrigger: {
         trigger: ".section6",
         start: "0% center",
@@ -194,6 +194,24 @@
     }
   });
 
+  
+  // Cuisine
+  gsap.utils.toArray('[data-speed]').forEach(layer => {
+    const speed = parseFloat(layer.getAttribute('data-speed'));
+    
+    gsap.to(layer, {
+      // Розраховуємо зміну положення по осі Y залежно від висоти документу та швидкості
+      y: -(document.documentElement.scrollHeight - window.innerHeight) / speed,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: layer,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+  });
+
 
 
 
@@ -210,91 +228,83 @@
   
 
   // Глобальні лічильники активних секцій
-let activeRedCount = 0;
-let activeYellowCount = 0;
+  let activeRedCount = 0;
+  let activeYellowCount = 0;
 
-// Функція для анімації кольорів фігур
-function updateColorAnimation() {
-  let startColor, endColor;
-  
-  if (activeRedCount > 0) {
-    startColor = "#FD0000";
-    endColor = "#000000";
-  } else if (activeYellowCount > 0) {
-    startColor = "#D36216";
-    endColor = "#ffffff";
-  } else {
-    startColor = "#0057b7";
-    endColor = "#FFD700";
+  // Функція для анімації кольорів фігур
+  function updateColorAnimation() {
+    let startColor, endColor;
+    
+    if (activeRedCount > 0) {
+      startColor = "#FD0000";
+      endColor = "#000000";
+    } else if (activeYellowCount > 0) {
+      startColor = "#D36216";
+      endColor = "#ffffff";
+    } else {
+      startColor = "#0057b7";
+      endColor = "#FFD700";
+    }
+    
+    // Анімація для кореневого елемента
+    gsap.to(document.documentElement, {
+      duration: 1,
+      "--start-color": startColor,
+      "--end-color": endColor,
+      ease: "power2.inOut"
+    });
   }
-  
-  // Анімація для фігур
-  gsap.to(document.querySelectorAll("figure.color"), {
-    duration: 1,
-    "--start-color": startColor,
-    "--end-color": endColor,
-    ease: "power2.inOut"
-  });
-  
-  // Анімація для кореневого елемента (скролу)
-  gsap.to(document.documentElement, {
-    duration: 1,
-    "--start-color": startColor,
-    "--end-color": endColor,
-    ease: "power2.inOut"
-  });
-}
 
 
-// Додаємо ScrollTrigger для секцій sectionRed
-gsap.utils.toArray(".sectionRed").forEach(section => {
-  ScrollTrigger.create({
-    trigger: section,
-    start: "top center",
-    end: "bottom center",
-    onEnter: () => {
-      activeRedCount++;
-      updateColorAnimation();
-    },
-    onLeave: () => {
-      activeRedCount = Math.max(0, activeRedCount - 1);
-      updateColorAnimation();
-    },
-    onEnterBack: () => {
-      activeRedCount++;
-      updateColorAnimation();
-    },
-    onLeaveBack: () => {
-      activeRedCount = Math.max(0, activeRedCount - 1);
-      updateColorAnimation();
-    }
+  // Додаємо ScrollTrigger для секцій sectionRed
+  gsap.utils.toArray(".sectionRed").forEach(section => {
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top center",
+      end: "bottom center",
+      onEnter: () => {
+        activeRedCount++;
+        updateColorAnimation();
+      },
+      onLeave: () => {
+        activeRedCount = Math.max(0, activeRedCount - 1);
+        updateColorAnimation();
+      },
+      onEnterBack: () => {
+        activeRedCount++;
+        updateColorAnimation();
+      },
+      onLeaveBack: () => {
+        activeRedCount = Math.max(0, activeRedCount - 1);
+        updateColorAnimation();
+      }
+    });
   });
-});
 
-// Додаємо ScrollTrigger для секцій sectionYellow
-gsap.utils.toArray(".sectionYellow").forEach(section => {
-  ScrollTrigger.create({
-    trigger: section,
-    start: "top center",
-    end: "bottom center",
-    onEnter: () => {
-      activeYellowCount++;
-      updateColorAnimation();
-    },
-    onLeave: () => {
-      activeYellowCount = Math.max(0, activeYellowCount - 1);
-      updateColorAnimation();
-    },
-    onEnterBack: () => {
-      activeYellowCount++;
-      updateColorAnimation();
-    },
-    onLeaveBack: () => {
-      activeYellowCount = Math.max(0, activeYellowCount - 1);
-      updateColorAnimation();
-    }
+  // Додаємо ScrollTrigger для секцій sectionYellow
+  gsap.utils.toArray(".sectionYellow").forEach(section => {
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top center",
+      end: "bottom center",
+      onEnter: () => {
+        activeYellowCount++;
+        updateColorAnimation();
+      },
+      onLeave: () => {
+        activeYellowCount = Math.max(0, activeYellowCount - 1);
+        updateColorAnimation();
+      },
+      onEnterBack: () => {
+        activeYellowCount++;
+        updateColorAnimation();
+      },
+      onLeaveBack: () => {
+        activeYellowCount = Math.max(0, activeYellowCount - 1);
+        updateColorAnimation();
+      }
+    });
   });
-});
 
 
 
