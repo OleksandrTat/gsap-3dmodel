@@ -2,95 +2,205 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GSAP Parallax Demo</title>
+  <title>Stand With Ukraine</title>
   <style>
-    /* Темна тема */
-    body {
+    :root {
+      --start-color: #0057b7;
+      --end-color: #ffd700;
+      --red-color: #FD0000;
+      --black-color: #000;
+    }
+    
+    .footer {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      background: #000;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    
+    .circle-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      filter: url(#goo);
+    }
+    
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--start-color), var(--end-color));
+      mix-blend-mode: screen;
+      opacity: 0.8;
+    }
+    
+    .title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Arial Black', sans-serif;
+      font-size: 4rem;
+      background: linear-gradient(45deg, var(--start-color), var(--end-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(255,215,0,0.4);
+      z-index: 100;
+      white-space: nowrap;
       margin: 0;
       padding: 0;
-      background: #121212;
-      color: #ffffff;
-      font-family: Arial, sans-serif;
-      overflow-x: hidden;
+      transition: transform 0.3s ease;
     }
-    section {
-      position: relative;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border-bottom: 1px solid #333;
-    }
-    .content {
-      position: relative;
-      z-index: 10;
-      text-align: center;
-      padding: 20px;
-    }
-    /* Паралакс-шари */
-    .parallax {
-      position: absolute;
-      font-size: 2rem;
-      padding: 15px 25px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid #ffffff55;
-      border-radius: 8px;
-      pointer-events: none;
+    
+    svg {
+      display: none;
     }
   </style>
 </head>
 <body>
+  <footer class="footer">
+    <div class="circle-container"></div>
+    <h1 class="title">STAND WITH UKRAINE</h1>
+    <svg>
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="
+                        1 0 0 0 0  
+                        0 1 0 0 0  
+                        0 0 1 0 0  
+                        0 0 0 18 -7" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+  </footer>
 
-  <section>
-    <div class="content">
-      <h1>GSAP Parallax Demo</h1>
-      <p>Прокрутіть, щоб побачити ефект</p>
-    </div>
-    <div class="parallax" data-speed="2" style="top: 10%; left: 10%;">Шар 1 (speed 2)</div>
-    <div class="parallax" data-speed="4" style="top: 50%; right: 10%;">Шар 2 (speed 4)</div>
-  </section>
-
-  <section>
-    <div class="content">
-      <h2>Секція 2</h2>
-      <p>Паралакс-ефект з іншими шарами</p>
-    </div>
-    <div class="parallax" data-speed="3" style="bottom: 20%; left: 15%;">Шар 3 (speed 3)</div>
-    <div class="parallax" data-speed="5" style="top: 30%; right: 20%;">Шар 4 (speed 5)</div>
-  </section>
-
-  <section>
-    <div class="content">
-      <h2>Секція 3</h2>
-      <p>Продовжуйте прокручувати...</p>
-    </div>
-    <div class="parallax" data-speed="2" style="top: 20%; left: 20%;">Шар 5 (speed 2)</div>
-    <div class="parallax" data-speed="4" style="bottom: 30%; right: 15%;">Шар 6 (speed 4)</div>
-  </section>
-
-  <!-- Підключення GSAP та ScrollTrigger з CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script>
-    gsap.registerPlugin(ScrollTrigger);
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.querySelector('.circle-container');
+      const circles = [];
+      const totalCircles = 30;
+      const title = document.querySelector('.title');
+      let circleAnimations = [];
 
-    // Для кожного елемента з атрибутом data-speed створюємо анімацію паралаксу
-    gsap.utils.toArray('[data-speed]').forEach(layer => {
-      const speed = parseFloat(layer.getAttribute('data-speed'));
-      
-      gsap.to(layer, {
-        // Розраховуємо зміну положення по осі Y залежно від висоти документу та швидкості
-        y: -(document.documentElement.scrollHeight - window.innerHeight) / speed,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: layer,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true
+      // Ініціалізація кіл
+      const createCircleAnimations = () => {
+        circles.forEach((circle) => {
+          const anim = gsap.to(circle, {
+            duration: gsap.utils.random(3, 5),
+            x: gsap.utils.random(-150, 150),
+            y: gsap.utils.random(-100, 100),
+            scale: gsap.utils.random(0.8, 1.5),
+            rotation: gsap.utils.random(-90, 90),
+            repeat: -1,
+            yoyo: true,
+            ease: 'power1.inOut'
+          });
+          circleAnimations.push(anim);
+        });
+      };
+
+      for(let i = 0; i < totalCircles; i++) {
+        const circle = document.createElement('div');
+        circle.className = 'circle';
+        const size = gsap.utils.random(40, 80);
+        circle.style.width = `${size}px`;
+        circle.style.height = `${size}px`;
+        circle.style.left = `${Math.random() * 100}%`;
+        circle.style.top = `${Math.random() * 100}%`;
+        container.appendChild(circle);
+        circles.push(circle);
+      }
+      createCircleAnimations();
+
+      const masterTL = gsap.timeline({paused: true});
+
+      masterTL.to({}, {duration: 3})
+      .add(() => {
+        circleAnimations.forEach(anim => anim.pause());
+
+        // Анімація миготіння кіл
+        circles.forEach(circle => {
+          const tl = gsap.timeline({ repeat: 3 });
+          tl.to(circle, {
+            duration: 0.1,
+            background: 'transparent',
+            scale: 0.9,
+            ease: 'power1.inOut'
+          })
+          .to(circle, {
+            duration: 0.1,
+            background: 'linear-gradient(45deg, var(--red-color), var(--black-color))',
+            scale: 1,
+            ease: 'power1.inOut'
+          })
+          .to(circle, {
+            duration: 0.1,
+            background: 'linear-gradient(45deg, var(--start-color), var(--end-color))',
+            ease: 'power1.inOut'
+          });
+        });
+
+        // Анімація тексту
+        const textTl = gsap.timeline({ repeat: 3 });
+        textTl.to(title, {
+          duration: 0.1,
+          '-webkit-text-fill-color': 'transparent',
+          ease: 'power1.inOut'
+        })
+        .to(title, {
+          duration: 0.1,
+          '-webkit-text-fill-color': 'var(--red-color)',
+          ease: 'power1.inOut'
+        })
+        .to(title, {
+          duration: 0.1,
+          '-webkit-text-fill-color': 'transparent',
+          ease: 'power1.inOut'
+        });
+      }, '+=0.5')
+      .to(title, {
+        duration: 1,
+        // background: 'linear-gradient(45deg, var(--red-color), var(--black-color))',
+        '-webkit-text-fill-color': 'transparent',
+        textShadow: '0 0 30px rgba(253,0,0,0.6)',
+        ease: 'power2.inOut',
+        onStart: () => {
+          gsap.to(title, {scale: 1.05, duration: 1, ease: 'power2.out'});
+        },
+        onComplete: () => {
+          gsap.to(title, {scale: 1, duration: 0.5, ease: 'power2.in'});
         }
+      })
+      .to(circles, {
+        duration: 2,
+        background: 'linear-gradient(45deg, var(--red-color), var(--black-color))',
+        ease: 'power2.inOut',
+        onStart: () => {
+          circleAnimations.forEach(anim => anim.kill());
+          circleAnimations = [];
+          createCircleAnimations();
+        }
+      }, '<');
+
+      document.querySelector('.footer').addEventListener('click', () => {
+        if(masterTL.progress() === 1) masterTL.restart();
+        masterTL.play();
       });
+
+      document.querySelector('.footer').addEventListener('mouseenter', () => {
+        gsap.to(container, {scale: 1.02, duration: 0.5, ease: 'power2.out'});
+        gsap.to(title, {rotation: 2, duration: 0.5, ease: 'power2.out'});
+      });
+      document.querySelector('.footer').addEventListener('mouseleave', () => {
+        gsap.to(container, {scale: 1, duration: 0.5, ease: 'power2.in'});
+        gsap.to(title, {rotation: 0, duration: 0.5, ease: 'power2.in'});
+      });
+
+      setTimeout(() => masterTL.play(), 1000);
     });
   </script>
 </body>

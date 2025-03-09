@@ -211,6 +211,18 @@
       }
     });
   });
+  gsap.from(".cuisinebg", {
+    // y: "-20%",
+    opacity: 0,
+    ease: "power2.inOut",
+    scrollTrigger: {
+        trigger: ".cuisinebg",
+        start: "0% bottom",
+        end: "center center",
+        scrub: true,
+        markers: false,
+    }
+  });
 
 
 
