@@ -360,3 +360,144 @@
   }
 
   machineGun("Glory to Ukraine! Glory to the heroes!");
+
+
+
+
+
+
+// -------------------------------- footer
+  
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.circle-container');
+  const circles = [];
+  const totalCircles = 15;
+  const title = document.querySelector('.title');
+  let circleAnimations = [];
+
+  // Función para resetear el estado
+  const resetState = () => {
+    circles.forEach(circle => {
+      gsap.set(circle, {
+        background: 'linear-gradient(45deg, #0057b7, #ffd700)',
+        opacity: 0.8,
+        scale: 1
+      });
+    });
+
+    title.style.setProperty('background-clip', 'text');
+    title.style.setProperty('-webkit-text-fill-color', 'transparent');
+    title.style.setProperty('background', 'linear-gradient(45deg, #0057b7, #ffd700)');
+    gsap.set(title, {
+      innerHTML: 'STAND WITH UKRAINE',
+      scale: 1,
+      rotation: 0
+    });
+  };
+
+  // Creación de animaciones de los círculos
+  const createCircleAnimations = () => {
+    circleAnimations = circles.map(circle => 
+      gsap.to(circle, {
+        duration: gsap.utils.random(3, 5),
+        x: gsap.utils.random(-150, 150),
+        y: gsap.utils.random(-100, 100),
+        scale: gsap.utils.random(0.8, 1.5),
+        rotation: gsap.utils.random(-90, 90),
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut'
+      })
+    );
+  };
+
+  // Inicializar círculos
+  for(let i = 0; i < totalCircles; i++) {
+    const circle = document.createElement('div');
+    circle.className = 'circle';
+    const size = gsap.utils.random(40, 80);
+    circle.style.width = `${size}px`;
+    circle.style.height = `${size}px`;
+    circle.style.left = `${Math.random() * 100}%`;
+    circle.style.top = `${Math.random() * 100}%`;
+    container.appendChild(circle);
+    circles.push(circle);
+  }
+
+  resetState();
+  createCircleAnimations();
+
+  const masterTL = gsap.timeline({paused: true});
+
+  masterTL
+    .to({}, {duration: 3})
+    .add(() => {
+      // Detener todas las animaciones de los círculos
+      circleAnimations.forEach(anim => anim.pause());
+
+      // Animación de parpadeo de los círculos
+      circles.forEach(circle => {
+        const tl = gsap.timeline({ repeat: 3 });
+        tl.to(circle, {
+          duration: 0.1,
+          background: 'transparent',
+          scale: 0.9,
+          ease: 'power1.inOut'
+        })
+        .to(circle, {
+          duration: 0.1,
+          background: 'linear-gradient(45deg, #FD0000, #000000)',
+          scale: 1,
+          ease: 'power1.inOut'
+        });
+      });
+
+      // Animación del texto
+      gsap.to(title, {
+        duration: 0.3,
+        '-webkit-text-fill-color': '#FD0000',
+        repeat: 3,
+        yoyo: true,
+        ease: 'power1.inOut'
+      });
+    }, '+=0.5')
+    .to(title, {
+      duration: 1,
+      textShadow: '0 0 30px rgba(253,0,0,0.6)',
+      ease: 'power2.inOut',
+      onComplete: () => {
+        gsap.to(title, {scale: 1, duration: 0.5, ease: 'power2.in'});
+      }
+    })
+    .to(title, {
+      duration: 1,
+      innerHTML: 'SUPPORT UKRAINE',
+      onStart: () => {
+        title.style.setProperty('background', 'linear-gradient(45deg, #FD0000, #000000)');
+        title.style.setProperty('background-clip', 'text');
+        title.style.setProperty('-webkit-text-fill-color', 'transparent');
+      }
+    }, '<')
+    .to(circles, {
+      background: 'linear-gradient(45deg, #FD0000, #000000)',
+      duration: 2,
+      ease: 'power2.inOut',
+      onStart: () => {
+        circleAnimations.forEach(anim => anim.kill());
+        createCircleAnimations();
+      }
+    }, '<');
+
+  // Evento de clic
+  document.querySelector('.footer').addEventListener('click', () => {
+    if(masterTL.isActive()) return;
+    
+    // Resetear completamente el estado
+    resetState();
+    masterTL.restart(true);
+    masterTL.play();
+  });
+
+  // Autoejecutar la animación después de 1 segundo
+  setTimeout(() => masterTL.play(), 1000);
+});

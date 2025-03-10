@@ -166,7 +166,24 @@
     <figure class="foodfigure3 color" data-speed="5"><img src="img/bulka.png" alt=""></figure>
   </section>
 
-  <section></section>
+  <!-- footer -->
+  <footer class="footer">
+    <div class="circle-container"></div>
+    <h1 class="title">STAND WITH UKRAINE</h1>
+    <svg>
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="
+            1 0 0 0 0  
+            0 1 0 0 0  
+            0 0 1 0 0  
+            0 0 0 18 -7" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+  </footer>
 
   
 

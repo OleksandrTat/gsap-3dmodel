@@ -5,3 +5,7 @@ window.onload = function() {
     // Mostrar el contenido de la página
     document.getElementById('section').style.display = 'block';
 };
+
+
+
+
