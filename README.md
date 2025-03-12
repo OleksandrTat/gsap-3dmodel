@@ -1,4 +1,4 @@
-# Proyecto Personal
+# Proyecto Academico
 
 Este es mi proyecto academico. Para ver cómo funciona correctamente, debes utilizar un servidor local. Puedes hacerlo de dos formas:
 
