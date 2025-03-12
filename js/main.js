@@ -9,3 +9,7 @@ window.onload = function() {
 
 
 
+// Initialize Lenis
+const lenis = new Lenis({
+    autoRaf: true,
+});
