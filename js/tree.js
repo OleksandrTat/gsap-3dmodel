@@ -19,7 +19,7 @@ const flightHeight = 400;
 
 const loader = new THREE.GLTFLoader();
 loader.load(
-  'model.glb',
+  'An-225_cutout/model.glb',
   (gltf) => {
     model = gltf.scene;
     model.position.set(startX, flightHeight, 0);
